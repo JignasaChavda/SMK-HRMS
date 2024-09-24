@@ -1,0 +1,86 @@
+{
+ "_liked_by": "[\"Administrator\"]",
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-08-30 18:26:19.317233",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "area",
+  "question",
+  "column_break_cfzk",
+  "strongly_agree",
+  "agree",
+  "disagree",
+  "strongly_disagree",
+  "comments"
+ ],
+ "fields": [
+  {
+   "fetch_from": "question.question_area",
+   "fieldname": "area",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Area",
+   "options": "Exit Question Area"
+  },
+  {
+   "fieldname": "question",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Question",
+   "options": "Exit Question"
+  },
+  {
+   "default": "0",
+   "fieldname": "strongly_agree",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Strongly Agree"
+  },
+  {
+   "default": "0",
+   "fieldname": "agree",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Agree"
+  },
+  {
+   "default": "0",
+   "fieldname": "disagree",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Disagree"
+  },
+  {
+   "default": "0",
+   "fieldname": "strongly_disagree",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Strongly Disagree"
+  },
+  {
+   "fieldname": "comments",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Comments"
+  },
+  {
+   "fieldname": "column_break_cfzk",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-09-02 13:52:32.470167",
+ "modified_by": "Administrator",
+ "module": "SMK HRMS",
+ "name": "Exit Question Table 1",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

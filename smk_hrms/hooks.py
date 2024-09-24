@@ -117,6 +117,9 @@ app_license = "mit"
 # override_doctype_class = {
 # 	"ToDo": "custom_app.overrides.CustomToDo"
 # }
+override_doctype_class = {
+    "Job Opening": "smk_hrms.job_opening_override.JobOpening"
+}
 
 # Document Events
 # ---------------
@@ -226,4 +229,45 @@ app_license = "mit"
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
+fixtures = [
+    "Workflow",
+    "Workflow State",
+    "Workflow Action Master",
+    
+    {"dt":"Print Format","filters":[
+        [
+            "module","in",[
+               "SMK HRMS"
+            ],
+        ]
+    ]},
+    {"dt":"Custom Field","filters":[
+        [
+            "module","in",[
+               "SMK HRMS"
+            ],
+        ]
+    ]},
+    {"dt":"Property Setter","filters":[
+        [
+            "module","in",[
+               "SMK HRMS"
+            ],
+        ]
+    ]},
+    {"dt":"Client Script","filters":[
+        [
+            "module","in",[
+               "SMK HRMS"
+            ],
+        ]
+    ]},
+    {"dt":"Server Script","filters":[
+        [
+            "module","in",[
+               "SMK HRMS"
+            ],
+        ]
+    ]},
+]
 
