@@ -1,6 +1,36 @@
 [
  {
-  "_liked_by": "[\"Administrator\"]",
+  "absolute_value": 0,
+  "align_labels_right": 0,
+  "css": ".print-format{\n    padding: 0.40in !important;\n    font-size: 14px !important;\n}\n\n@media print {\n    @page {\n        margin: 0in !important;\n    }\n}",
+  "custom_format": 1,
+  "default_print_language": "en",
+  "disabled": 0,
+  "doc_type": "Employee",
+  "docstatus": 0,
+  "doctype": "Print Format",
+  "font": null,
+  "font_size": 14,
+  "format_data": null,
+  "html": "<div>\n{% set formatted_date = frappe.utils.get_datetime(doc.relieving_date).strftime(\"%B %e, %Y\") %}\n\n{{ formatted_date or '' }}\n<br><br>\n<b>Candidate Name<br>\nAddress</b><br><br>\n\n\nDear {{ doc.employee_name}},\n<br><br>\n\nThis in reference to your resignation letter dated <b>Date of Resignation</b>, requesting the Management to relieve you from the services of the Company.<br><br>\nPlease note that we accept your resignation. You will serve your notice period up till the close of working hours on <b>Date of Relieving</b>. On completion of the notice period and clearance of all the dues outstanding against your name as per the full and final statement a relieving cum experience certificate will be issued to you.<br><br>\nYou are requested to please connect with HR Department to understand the exit formalities and submit the Clearance Certificate in the prescribed format, so as to enable us to prepare your full and final statement.<br><br>\n\n<b>Yours faithfully,<br>\nFor {{ doc.company }}</b>\n\n\n<br><br><br><br>\n\n<b>Signing Authority<br>Title/Position</b>\n</div>\n<div style=\"width: 100%; margin-top: 40px; position: relative;\">\n    <div style=\"position: absolute; left: 0;\">\n        <span></span>\n    </div>\n    <div style=\"position: absolute; right: 0;\">\n        <span style=\"border-top: 1px solid;\"><b>I accept the above</b></span>\n    </div>\n</div>",
+  "line_breaks": 0,
+  "margin_bottom": 15.0,
+  "margin_left": 15.0,
+  "margin_right": 15.0,
+  "margin_top": 15.0,
+  "modified": "2024-08-28 14:00:47.687706",
+  "module": "SMK HRMS",
+  "name": "Resignation Letter",
+  "page_number": "Hide",
+  "print_format_builder": 0,
+  "print_format_builder_beta": 0,
+  "print_format_type": "Jinja",
+  "raw_commands": null,
+  "raw_printing": 0,
+  "show_section_headings": 0,
+  "standard": "Yes"
+ },
+ {
   "absolute_value": 0,
   "align_labels_right": 0,
   "css": ".print-format{\n    padding: 0.30in !important;\n    font-size: 14px !important;\n}\n\n/*@media print {*/\n/*    @page {*/\n/*        margin: 0in !important;*/\n/*    }*/\n/*}*/\n\n",
@@ -13,13 +43,13 @@
   "font": null,
   "font_size": 14,
   "format_data": null,
-  "html": "<div>\n<p>\n\n{% set current_date = frappe.utils.nowdate() %}\n{% set formatted_current_date = frappe.utils.get_datetime(current_date).strftime(\"%B %e, %Y\") %}\n\n{% set formatted_date = frappe.utils.get_datetime(doc.offer_date).strftime(\"%B %e, %Y\") %}\n\n{{ formatted_current_date or '' }}\n<br><br>\n\n<h3 align='center'>Offer Letter</h3>\n<b>{{doc.applicant_name}}\n\n{%- set job_applicant = frappe.get_doc(\"Job Applicant\", doc.job_applicant) -%}\n{%- if job_applicant.email_id == doc.job_applicant -%}\n{% if job_applicant.custom_address %}\n    <br>{{ job_applicant.custom_address | replace('\\n', '<br>') }}\n{% endif %}\n{%- else -%}\n{%- endif %}\n{%- set job_applicant = frappe.get_doc(\"Job Applicant\", doc.job_applicant) -%}\n{%- if job_applicant.email_id == doc.job_applicant -%}\n{% if job_applicant.custom_location %}\n    <br>{{ job_applicant.custom_location | replace('\\n', '<br>') }}\n{% endif %}\n{%- else -%}\n{%- endif %}\n</b><br>\n\n\n<br>Dear {{ doc.applicant_name }}, \n\n<br><br>\n<p style='text-align:justify;'>In reference to your application and subsequent interviews held with us, we are pleased to offer you the position of ‘<b>{{ doc.designation }}</b>’ in our organization on the following terms & conditions:</p>\n\n<ol start=\"1\">\n    <li style='text-align:justify;'>You will be based at our office/plant in <b>{%- set job_applicant = frappe.get_doc(\"Job Applicant\", doc.job_applicant) -%}\n{%- if job_applicant.email_id == doc.job_applicant -%}\n{% if job_applicant.custom_location %}\n    {{ job_applicant.custom_branch | replace('\\n', '<br>') }}\n{% endif %}\n{%- else -%}\n{%- endif %}</b>, Gujarat or such other place it may relocate to.</li>\n    <li style='text-align:justify;'>Please refer Annexure A for the compensation break-up agreed & accepted by you.</li>\n    <li style='text-align:justify;'>As mutually agreed, you are expected to join the duty on or before Proposed \n    {%- for row in doc.offer_terms -%}\n        {%- if \"Date of Joining\" in row.offer_term -%}\n            {%- if row.value -%}\n                {{ ' ' }} <b>{{ row.value }}.</b>\n            {%- else -%}\n                .\n            {%- endif -%}\n        {%- endif -%}\n    {%- endfor -%}</li>\n    \n    <li style='text-align:justify;'>You will be on a probation period for six months starting from your date of joining.</li>\n    <li style='text-align:justify;'>To avoid the offer being nullified the company will conduct independent reference checks as deemed fit.</li>\n    <li style='text-align:justify;'>Your role is already described in the Job Description that was shared/discussed with you during the interview.</li>\n    <li style='text-align:justify;'>You are required to submit self-attested photocopy of the following documents as listed below.\n        <ul style=\"list-style-type:disc\">\n            {%- for row in doc.custom_required_documents -%}\n                <li>{{ row.document_name or '' }}</li>\n            {%- endfor -%}\n            \n        </ul>\n    </li>\n    <li style='text-align:justify;'>Your appointment letter will be issued to you on your joining.</li>\n</ol>\n<p style='text-align:justify;'>Kindly signify your acceptance by affixing your signature on the duplicate copy.</p>\n<br><br>\n\n<p class=\"strong\">\n\n<b>Yours faithfully,<br>\nFor {{ doc.company }}</b>\n\n\n<br><br><br><br>\n\n<b>Signing Authority</b>\n</p>\n<hr>\n<p style='text=align:justiy;'>I, <b>{{doc.applicant_name}} </b> hereby acknowledge that I understand the above terms and conditions & compensation break-up as detailed in Annexure A. I hereby confirm that I accept this offer. <br>\n<div style=\"width: 100%; margin-top: 40px; position: relative;\">\n    <div style=\"position: absolute; left: 0;\">\n        <span><b>Candidate Name: </b>{{doc.applicant_name}} </span>\n    </div>\n    <div style=\"position: absolute; right: 0;\">\n        <span><b>Signature</b>_________________________________</span>\n    </div>\n</div>\n\n\n</p>\n\n</div>",
+  "html": "<div>\n<p>\n\n{% set current_date = frappe.utils.nowdate() %}\n{% set formatted_current_date = frappe.utils.get_datetime(current_date).strftime(\"%B %e, %Y\") %}\n\n{% set formatted_date = frappe.utils.get_datetime(doc.offer_date).strftime(\"%B %e, %Y\") %}\n\n{{ formatted_current_date or '' }}\n<br><br>\n\n<h3 align='center'>Offer Letter</h3>\n<b>{{doc.applicant_name}}\n\n{%- set job_applicant = frappe.get_doc(\"Job Applicant\", doc.job_applicant) -%}\n{%- if job_applicant.email_id == doc.job_applicant -%}\n{% if job_applicant.custom_address %}\n    <br>{{ job_applicant.custom_address | replace('\\n', '<br>') }}\n{% endif %}\n{%- else -%}\n{%- endif %}\n{%- set job_applicant = frappe.get_doc(\"Job Applicant\", doc.job_applicant) -%}\n{%- if job_applicant.email_id == doc.job_applicant -%}\n{% if job_applicant.custom_location %}\n    <br>{{ job_applicant.custom_location | replace('\\n', '<br>') }}\n{% endif %}\n{%- else -%}\n{%- endif %}\n</b><br>\n\n\n<br>Dear {{ doc.applicant_name }}, \n\n<br><br>\n<p style='text-align:justify;'>In reference to your application and subsequent interviews held with us, we are pleased to offer you the position of ‘<b>{{ doc.designation }}</b>’ in our organization on the following terms & conditions:</p>\n\n<ol start=\"1\">\n    <li style='text-align:justify;'>You will be based at our office/plant in <b>{%- set job_applicant = frappe.get_doc(\"Job Applicant\", doc.job_applicant) -%}\n{%- if job_applicant.email_id == doc.job_applicant -%}\n{% if job_applicant.custom_location %}\n    {{ job_applicant.custom_branch | replace('\\n', '<br>') }}\n{% endif %}\n{%- else -%}\n{%- endif %}</b>, Gujarat or such other place it may relocate to.</li>\n    <li style='text-align:justify;'>Please refer Annexure A for the compensation break-up agreed & accepted by you.</li>\n    <li style='text-align:justify;'>As mutually agreed, you are expected to join the duty on or before Proposed \n    {%- for row in doc.offer_terms -%}\n        {%- if \"Date of Joining\" in row.offer_term -%}\n            {%- if row.value -%}\n                {{ ' ' }} <b>{{ row.value }}.</b>\n            {%- else -%}\n                .\n            {%- endif -%}\n        {%- endif -%}\n    {%- endfor -%}</li>\n    \n    <li style='text-align:justify;'>You will be on a probation period for six months starting from your date of joining.</li>\n    <li style='text-align:justify;'>To avoid the offer being nullified the company will conduct independent reference checks as deemed fit.</li>\n    <li style='text-align:justify;'>Your role is already described in the Job Description that was shared/discussed with you during the interview.</li>\n    <li style='text-align:justify;'>You are required to submit self-attested photocopy of the following documents as listed below.\n        <ul style=\"list-style-type:disc\">\n           <li>Aadhaar Card</li>\n           <li>Pan Card</li>\n            <li>Bank Details – Cancelled Cheque</li>\n            <li>Relieving/Experience Certification of the past 2 latest assignments</li>\n            <li>Qualification Documents – Degree & Master (if Any)</li>\n        </ul>\n    </li>\n    <li style='text-align:justify;'>Your appointment letter will be issued to you on your joining.</li>\n</ol>\n<p style='text-align:justify;'>Kindly signify your acceptance by affixing your signature on the duplicate copy.</p>\n<br><br>\n\n<p class=\"strong\">\n\n<b>Yours faithfully,<br>\nFor {{ doc.company }}</b>\n\n\n<br><br><br><br>\n\n<b>Signing Authority</b>\n</p>\n<hr>\n<p style='text=align:justiy;'>I, <b>{{doc.applicant_name}} </b> hereby acknowledge that I understand the above terms and conditions & compensation break-up as detailed in Annexure A. I hereby confirm that I accept this offer. <br>\n<div style=\"width: 100%; margin-top: 40px; position: relative;\">\n    <div style=\"position: absolute; left: 0;\">\n        <span><b>Candidate Name: </b>{{doc.applicant_name}} </span>\n    </div>\n    <div style=\"position: absolute; right: 0;\">\n        <span><b>Signature</b>_________________________________</span>\n    </div>\n</div>\n\n\n</p>\n\n</div>",
   "line_breaks": 0,
   "margin_bottom": 15.0,
   "margin_left": 15.0,
   "margin_right": 15.0,
   "margin_top": 15.0,
-  "modified": "2024-09-24 12:51:37.775128",
+  "modified": "2024-09-25 15:33:27.617998",
   "module": "SMK HRMS",
   "name": "Offer Letter",
   "page_number": "Hide",
@@ -32,7 +62,6 @@
   "standard": "No"
  },
  {
-  "_liked_by": "[\"Administrator\"]",
   "absolute_value": 0,
   "align_labels_right": 0,
   "css": ".print-format{\n    padding: 0.40in !important;\n    font-size: 14px !important;\n}\n\n@media print {\n    @page {\n        margin: 0in !important;\n    }\n}\nol.custom-counter {\n        list-style-type: none;\n        counter-reset: section;\n}\n    ol.custom-counter > li {\n        counter-increment: section;\n        margin-bottom: 10px;\n    }\n    ol.custom-counter > li::before {\n        content: counter(section) \")\";\n        margin-right: 10px;\n    }\nol.custom-counteralpha {\n    list-style-type: none;\n    counter-reset: section;\n}\n\n    ol.custom-counteralpha > li {\n        counter-increment: section;\n        margin-bottom: 10px;\n    }\n    \n    ol.custom-counteralpha > li::before {\n        content: counter(section, lower-alpha) \")\";\n        margin-right: 10px;\n    }\n.sectiontable{\n    margin: 0.5rem 8rem 2rem 0rem!important;\n}\ntd{\n    height: 80% !important;\n}\ntd:first-child{\n    width: 60%;\n}\ntd:nth-child(2){\n    width: 40%;\n    text-align: center;\n}\ntd{\n    color: #000 !important;\n    padding: 0px !important;\n}\n.print-format td, .print-format td {\n    padding: 5px !important;\n}\n.center-align {\n    text-align: center;\n}\n.left-align {\n    text-align: left;\n}\n.fixed-height {\n        height: 25px;\n    }\n.total{\n    background-color: #f4f5f6;\n}\n.head{\n    font-size: 12px !important;\n}\n",
@@ -64,7 +93,6 @@
   "standard": "No"
  },
  {
-  "_liked_by": "[\"Administrator\"]",
   "absolute_value": 0,
   "align_labels_right": 0,
   "css": ".print-format{\n    padding: 0.40in !important;\n    font-size: 14px !important;\n}\n\n/*@media print {*/\n/*    @page {*/\n/*        margin: 0in !important;*/\n/*    }*/\n/*}*/\n",
@@ -96,7 +124,6 @@
   "standard": "No"
  },
  {
-  "_liked_by": "[\"Administrator\"]",
   "absolute_value": 0,
   "align_labels_right": 0,
   "css": ".print-format{\n    padding: 0.40in !important;\n    font-size: 14px !important;\n}\n\n/*@media print {*/\n/*    @page {*/\n/*        margin: 0in !important;*/\n/*    }*/\n/*}*/",
@@ -128,7 +155,6 @@
   "standard": "No"
  },
  {
-  "_liked_by": "[\"Administrator\"]",
   "absolute_value": 0,
   "align_labels_right": 0,
   "css": ".print-format{\n    padding: 0.40in !important;\n    font-size: 14px !important;\n}\n\n/*@media print {*/\n/*    @page {*/\n/*        margin: 0in !important;*/\n/*    }*/\n/*}*/",
@@ -160,7 +186,6 @@
   "standard": "No"
  },
  {
-  "_liked_by": "[\"Administrator\"]",
   "absolute_value": 0,
   "align_labels_right": 0,
   "css": ".print-format{\n    padding: 0.40in !important;\n    font-size: 14px !important;\n}\n\n/*@media print {*/\n/*    @page {*/\n/*        margin: 0in !important;*/\n/*    }*/\n/*}*/",
@@ -192,7 +217,6 @@
   "standard": "No"
  },
  {
-  "_liked_by": "[\"Administrator\"]",
   "absolute_value": 0,
   "align_labels_right": 0,
   "css": ".print-format{\n    padding: 0.40in !important;\n    font-size: 14px !important;\n}\n\n@media print {\n    @page {\n        margin: 0in !important;\n    }\n}",
@@ -224,7 +248,6 @@
   "standard": "No"
  },
  {
-  "_liked_by": "[\"Administrator\"]",
   "absolute_value": 0,
   "align_labels_right": 0,
   "css": ".print-format{\n    padding: 0.40in !important;\n    font-size: 14px !important;\n}\n\n@media print {\n    @page {\n        margin: 0in !important;\n    }\n}\nol.custom-counter {\n    list-style-type: none;\n    counter-reset: section;\n    padding-left: 0;\n}\n\n    ol.custom-counter > li {\n        counter-increment: section;\n        margin-bottom: 10px;\n    }\n    \n    ol.custom-counter > li::before {\n        content: counter(section) \".\";\n        margin-right: 10px;\n        font-weight: bold;\n    }\n\n/* Inner List */\nol.custom-counter .sub-counter {\n    list-style-type: none;\n    counter-reset: subsection;\n    padding-left: 20px;\n}\n\n    ol.custom-counter .sub-counter > li {\n        counter-increment: subsection;\n        margin-bottom: 10px;\n    }\n    \n    ol.custom-counter .sub-counter > li::before {\n        content: counter(section) \".\" counter(subsection);\n        margin-right: 10px;\n        font-weight: bold;\n    }\n/* Inner List */\nol.custom-counter .sub-counter .sub-sub-counter {\n    list-style-type: none;\n    counter-reset: subsubsection;\n    padding-left: 20px;\n}\n\n    ol.custom-counter .sub-counter .sub-sub-counter > li {\n        counter-increment: subsubsection;\n        margin-bottom: 10px;\n    }\n    \n    ol.custom-counter .sub-counter .sub-sub-counter > li::before {\n        content: counter(section) \".\" counter(subsection) \".\" counter(subsubsection);\n        margin-right: 10px;\n        font-weight: bold;\n    }\n/* Sub-Items as Letters */\nol.custom-counter .alpha-counter {\n    list-style-type: none;\n    counter-reset: subsubsection;\n    padding-left: 20px;\n}\n\n    ol.custom-counter .alpha-counter > li {\n        counter-increment: subsubsection;\n        margin-bottom: 10px;\n    }\n    \n    ol.custom-counter .alpha-counter > li::before {\n        content: \"(\"counter(subsubsection, lower-alpha) \")\";\n        margin-right: 10px;\n    }\nh5{\n    margin-top: 0px !important;\n    line-height: 1.8rem !important;\n}\n.sectionschedule{\n    margin: 10px 0px !important;\n}\n.sectiontable{\n    margin: 0.75rem 12rem 0.75rem 0rem !important;\n}\n    .print-format th {\n        background-color: #fff !important;\n        font-size: 14px !important;\n    }\n    .print-format td {\n        font-size: 14px !important;\n    }\n.candidateinfo{\n    margin: 3rem 0px 0px !important;\n}\n",
@@ -256,7 +279,6 @@
   "standard": "No"
  },
  {
-  "_liked_by": "[\"Administrator\"]",
   "absolute_value": 0,
   "align_labels_right": 0,
   "css": ".print-format{\n    padding: 0.40in !important;\n    font-size: 14px !important;\n}\n\n/*@media print {*/\n/*    @page {*/\n/*        margin: 55in !important;*/\n/*    }*/\n/*} */\n\nol {\n    list-style: none; \n    padding-left: 0; \n}\n\n    ol.custom-alpha {\n        counter-reset: list; \n        margin-bottom: 0; \n    }\n\n    ol.custom-alpha li {\n        counter-increment: list; \n        margin-bottom: 10px; \n        margin-left: 30px !important;\n    }\n    ol.custom-alpha li:last-child {\n    margin-bottom: 0; \n}\n\n    ol.custom-alpha li::before {\n        content: counter(list, lower-alpha) \")\"; \n        margin-right: 5px; \n    }\n    .column {\n      float: left;\n      width: 50%;\n      padding: 10px;\n    }\n    \n    /* Clear floats after the columns */\n    .row:after {\n      content: \"\";\n      display: table;\n      clear: both;\n    }\n    .row{\n        margin-right: 0px !important;\n        margin-left: 20px !important; \n    }",

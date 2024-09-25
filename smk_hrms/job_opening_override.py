@@ -18,10 +18,10 @@ from hrms.hr.doctype.staffing_plan.staffing_plan import (
 
 class JobOpening(WebsiteGenerator):
 	website = frappe._dict(
-        template="smk_hrms/templates/generators/job_opening_override.html",  # Point to your custom template
-        condition_field="publish",
-        page_title_field="job_title",
-    )
+		template="templates/generators/job_opening.html",
+		condition_field="publish",
+		page_title_field="job_title",
+	)
 
 	def autoname(self):
 		self.name = set_name_from_naming_options(frappe.get_meta(self.doctype).autoname, self)

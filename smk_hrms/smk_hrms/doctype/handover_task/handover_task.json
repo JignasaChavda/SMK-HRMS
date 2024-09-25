@@ -1,38 +1,34 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:template_name",
- "creation": "2024-09-21 10:27:21.605643",
+ "creation": "2024-09-25 16:01:46.779722",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "template_name",
-  "documents"
+  "task_asset",
+  "related_department"
  ],
  "fields": [
   {
-   "fieldname": "template_name",
+   "fieldname": "task_asset",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Template Name",
-   "reqd": 1,
-   "unique": 1
+   "label": "Task_Asset",
+   "reqd": 1
   },
   {
-   "fieldname": "documents",
-   "fieldtype": "Table",
-   "label": "Documents",
-   "options": "Documents",
-   "reqd": 1
+   "fieldname": "related_department",
+   "fieldtype": "Link",
+   "label": "Related Department",
+   "options": "Department"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-21 10:28:22.226195",
+ "modified": "2024-09-25 16:02:28.796764",
  "modified_by": "Administrator",
  "module": "SMK HRMS",
- "name": "Required Documents",
- "naming_rule": "By fieldname",
+ "name": "Handover Task",
  "owner": "Administrator",
  "permissions": [
   {

@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class OpeningQuestionnaireTemplate(Document):
+class HandoverTask(Document):
 	pass

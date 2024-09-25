@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class JobOpeningQuestion(Document):
+class HandoverDetails(Document):
 	pass

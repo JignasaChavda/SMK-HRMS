@@ -44,7 +44,6 @@
   "view": "Form"
  },
  {
-  "_liked_by": "[\"jignasha@sanskartechnolab.com\", \"Administrator\"]",
   "docstatus": 0,
   "doctype": "Client Script",
   "dt": "Employee",
@@ -56,7 +55,6 @@
   "view": "Form"
  },
  {
-  "_liked_by": "[\"Administrator\"]",
   "docstatus": 0,
   "doctype": "Client Script",
   "dt": "Staffing Plan",
@@ -68,7 +66,6 @@
   "view": "Form"
  },
  {
-  "_liked_by": "[\"Administrator\"]",
   "docstatus": 0,
   "doctype": "Client Script",
   "dt": "Job Opening",
@@ -82,23 +79,12 @@
  {
   "docstatus": 0,
   "doctype": "Client Script",
-  "dt": "Job Offer",
+  "dt": "Job Applicant",
   "enabled": 1,
-  "modified": "2024-09-24 12:50:48.157811",
+  "modified": "2024-09-25 15:44:47.311884",
   "module": "SMK HRMS",
-  "name": "Set documents list in job offer",
-  "script": "frappe.ui.form.on(\"Job Offer\", {\n\n    \n    custom_documents_template: function (frm) {\n        frappe.call({\n            method: 'get_documents',\n            args: {\n                docu_template: frm.doc.custom_documents_template\n            },\n            callback: function (r) {\n                if (r.message) {\n                    \n                    frm.clear_table(\"custom_required_documents\");\n\n                    r.message.sort((a, b) => a.idx - b.idx);\n\n                    r.message.forEach(function(item) {\n                        let child = frm.add_child(\"custom_required_documents\");\n                        frappe.model.set_value(child.doctype, child.name, \"document_name\", item.document_name);\n                        \n                    });\n                    \n                    frm.refresh_field(\"custom_required_documents\");\n                }\n            }\n        });\n    }\n});\n\n",
-  "view": "Form"
- },
- {
-  "docstatus": 0,
-  "doctype": "Client Script",
-  "dt": "Job Opening",
-  "enabled": 1,
-  "modified": "2024-09-24 12:50:48.117815",
-  "module": "SMK HRMS",
-  "name": "Set Question list in job opening",
-  "script": "frappe.ui.form.on(\"Job Opening\", {\n\n    custom_questionnaire_template: function (frm) {\n        frappe.call({\n            method: 'get_question',\n            args: {\n                que_template: frm.doc.custom_questionnaire_template\n            },\n            callback: function (r) {\n                if (r.message) {\n                    \n                    frm.clear_table(\"custom_questionnaire\");\n\n                    r.message.sort((a, b) => a.idx - b.idx);\n\n                    r.message.forEach(function(item) {\n                        let child = frm.add_child(\"custom_questionnaire\");\n                        frappe.model.set_value(child.doctype, child.name, \"questionnaire\", item.questionnaire);\n                        \n                    });\n                    \n                    frm.refresh_field(\"custom_questionnaire\");\n                }\n            }\n        });\n    }\n});\n\n",
+  "name": "Fetch designation while selecting job opening",
+  "script": "frappe.ui.form.on('Job Applicant', {\n    job_title: function (frm) {\n        var job_title = frm.doc.job_title;\n        if (job_title) {\n            frappe.db.get_value('Job Opening', job_title, 'designation')\n            .then(function(r) { // Corrected this line\n                var desi = r.message.designation;\n                frm.set_value('designation', desi);\n                frm.refresh_field('designation');\n            });\n        }\n    }\n});\n",
   "view": "Form"
  }
 ]
