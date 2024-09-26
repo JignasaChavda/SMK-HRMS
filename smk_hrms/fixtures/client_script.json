@@ -86,5 +86,16 @@
   "name": "Fetch designation while selecting job opening",
   "script": "frappe.ui.form.on('Job Applicant', {\n    job_title: function (frm) {\n        var job_title = frm.doc.job_title;\n        if (job_title) {\n            frappe.db.get_value('Job Opening', job_title, 'designation')\n            .then(function(r) { // Corrected this line\n                var desi = r.message.designation;\n                frm.set_value('designation', desi);\n                frm.refresh_field('designation');\n            });\n        }\n    }\n});\n",
   "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Employee Profile",
+  "enabled": 0,
+  "modified": "2024-09-26 11:14:00.331274",
+  "module": "SMK HRMS",
+  "name": "Update Workflow state",
+  "script": "frappe.ui.form.on('Employee Profile', {\n    before_save: function(frm) {\n        var state = frm.doc.workflow_state;\n\n        if (!frappe.user_roles.includes('HR Manager')) {\n            \n            if (state === 'Approved' || state === 'Rejected') {\n                frm.set_value('workflow_state', 'Pending');\n                frm.refresh_field('workflow_state');\n            }\n        }\n    },\n    refresh: function(frm){\n        var state = frm.doc.workflow_state;\n        \n        if (!frappe.user_roles.includes('HR Manager')) {\n            \n            console.log('hello')\n            if (state === 'Approved' || state === 'Rejected') {\n                frm.set_read_only(false);\n            }\n            if (state=='Pending'){\n                frm.set_read_only(true);\n            }\n        }\n    }\n});\n",
+  "view": "Form"
  }
 ]

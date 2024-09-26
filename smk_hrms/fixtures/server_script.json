@@ -112,5 +112,24 @@
   "reference_doctype": null,
   "script": "que_template = frappe.form_dict[\"que_template\"]\nquestionnaire = frappe.db.get_all(\"Candidate Questionnaire\", {'parent': que_template}, ['idx', 'questionnaire'])\n\nfrappe.response[\"message\"] = questionnaire",
   "script_type": "API"
+ },
+ {
+  "allow_guest": 0,
+  "api_method": null,
+  "cron_format": null,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "Before Save",
+  "enable_rate_limit": 0,
+  "event_frequency": "All",
+  "modified": "2024-09-25 18:52:31.294942",
+  "module": "SMK HRMS",
+  "name": "Set Full name in Employee Profile",
+  "rate_limit_count": 5,
+  "rate_limit_seconds": 86400,
+  "reference_doctype": "Employee Profile",
+  "script": "first_name = doc.first_name or ''\nmiddle_name = doc.middle_name or ''\nlast_name = doc.last_name or ''\n\nif first_name or middle_name or last_name:\n    doc.full_name = f\"{first_name} {middle_name} {last_name}\"\n\n\n",
+  "script_type": "DocType Event"
  }
 ]

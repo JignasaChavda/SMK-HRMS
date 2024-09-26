@@ -1,0 +1,287 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "format: EMP-SELF-{#####}",
+ "creation": "2024-09-25 17:59:30.024309",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "first_name",
+  "middle_name",
+  "last_name",
+  "full_name",
+  "column_break_1eb4",
+  "gender",
+  "date_of_birth",
+  "mobile",
+  "address",
+  "current_address",
+  "column_break_gwz8",
+  "email",
+  "emergency_contact_no",
+  "identification_tab",
+  "aadhaar_no",
+  "pan_no",
+  "passport_no",
+  "column_break_wzyj",
+  "copy_of_aadhaar",
+  "copy_of_pan",
+  "nominee_details_section",
+  "pf_nominee_details",
+  "personal_tab",
+  "marital_status",
+  "blood_group",
+  "column_break_blmv",
+  "family_background",
+  "education",
+  "educational_qualification",
+  "previous_work_experience",
+  "exit_tab",
+  "resignation_date",
+  "exit_section",
+  "reason_for_leaving",
+  "column_break_7frc",
+  "feedback"
+ ],
+ "fields": [
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "First Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "middle_name",
+   "fieldtype": "Data",
+   "label": "Middle Name"
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "label": "Last Name"
+  },
+  {
+   "fieldname": "gender",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Gender",
+   "options": "Gender",
+   "reqd": 1
+  },
+  {
+   "fieldname": "date_of_birth",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date of Birth",
+   "reqd": 1
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Section Break",
+   "label": "Address & Contact"
+  },
+  {
+   "fieldname": "mobile",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Mobile",
+   "reqd": 1
+  },
+  {
+   "fieldname": "current_address",
+   "fieldtype": "Small Text",
+   "label": "Current Address"
+  },
+  {
+   "fieldname": "column_break_1eb4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email"
+  },
+  {
+   "fieldname": "emergency_contact_no",
+   "fieldtype": "Data",
+   "label": "Emergency Contact No"
+  },
+  {
+   "fieldname": "identification_tab",
+   "fieldtype": "Tab Break",
+   "label": "Identification"
+  },
+  {
+   "fieldname": "aadhaar_no",
+   "fieldtype": "Data",
+   "label": "Aadhaar No",
+   "reqd": 1
+  },
+  {
+   "fieldname": "passport_no",
+   "fieldtype": "Data",
+   "label": "Passport No"
+  },
+  {
+   "fieldname": "column_break_wzyj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "pan_no",
+   "fieldtype": "Data",
+   "label": "PAN No"
+  },
+  {
+   "fieldname": "personal_tab",
+   "fieldtype": "Tab Break",
+   "label": "Personal"
+  },
+  {
+   "fieldname": "marital_status",
+   "fieldtype": "Select",
+   "label": "Marital Status",
+   "options": "\nSingle\nMarried\nDivorsed\nWidowed"
+  },
+  {
+   "fieldname": "blood_group",
+   "fieldtype": "Select",
+   "label": "Blood Group",
+   "options": "\nA+\nA-\nB+\nB-\nAB+\nAB-\nO+\nO-"
+  },
+  {
+   "fieldname": "column_break_blmv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "family_background",
+   "fieldtype": "Small Text",
+   "label": "Family Background"
+  },
+  {
+   "fieldname": "education",
+   "fieldtype": "Section Break",
+   "label": "Education & Previous Experience"
+  },
+  {
+   "fieldname": "educational_qualification",
+   "fieldtype": "Table",
+   "label": "Educational Qualification",
+   "options": "Employee Education"
+  },
+  {
+   "fieldname": "previous_work_experience",
+   "fieldtype": "Table",
+   "label": "Previous Work Experience",
+   "options": "Employee External Work History"
+  },
+  {
+   "fieldname": "exit_section",
+   "fieldtype": "Section Break",
+   "label": "Exit Information"
+  },
+  {
+   "fieldname": "reason_for_leaving",
+   "fieldtype": "Small Text",
+   "label": "Reason For Leaving"
+  },
+  {
+   "fieldname": "column_break_7frc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "feedback",
+   "fieldtype": "Small Text",
+   "label": "Feedback"
+  },
+  {
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "label": "Full Name"
+  },
+  {
+   "fieldname": "column_break_gwz8",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "nominee_details_section",
+   "fieldtype": "Section Break",
+   "label": "Nominee Details"
+  },
+  {
+   "fieldname": "pf_nominee_details",
+   "fieldtype": "Table",
+   "label": "PF Nominee Details",
+   "options": "Nominee Details"
+  },
+  {
+   "fieldname": "copy_of_aadhaar",
+   "fieldtype": "Attach",
+   "label": "Copy of Aadhaar",
+   "mandatory_depends_on": "eval:doc.aadhaar_no!=null"
+  },
+  {
+   "fieldname": "copy_of_pan",
+   "fieldtype": "Attach",
+   "label": "Copy of PAN",
+   "mandatory_depends_on": "eval:doc.pan_no!=null"
+  },
+  {
+   "fieldname": "exit_tab",
+   "fieldtype": "Tab Break",
+   "label": "Exit"
+  },
+  {
+   "fieldname": "resignation_date",
+   "fieldtype": "Date",
+   "label": "Resignation Date"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-09-26 11:01:55.074509",
+ "modified_by": "Administrator",
+ "module": "SMK HRMS",
+ "name": "Employee Profile",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "role": "All",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "import": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "HR Manager",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

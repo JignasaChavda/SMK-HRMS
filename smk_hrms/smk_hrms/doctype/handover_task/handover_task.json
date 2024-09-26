@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "field:task_asset",
  "creation": "2024-09-25 16:01:46.779722",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -13,8 +14,9 @@
    "fieldname": "task_asset",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Task_Asset",
-   "reqd": 1
+   "label": "Task/Asset",
+   "reqd": 1,
+   "unique": 1
   },
   {
    "fieldname": "related_department",
@@ -25,10 +27,11 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-25 16:02:28.796764",
+ "modified": "2024-09-25 17:49:29.566517",
  "modified_by": "Administrator",
  "module": "SMK HRMS",
  "name": "Handover Task",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
