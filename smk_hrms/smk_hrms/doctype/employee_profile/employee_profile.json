@@ -7,7 +7,6 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "employee_id",
   "first_name",
   "middle_name",
   "last_name",
@@ -88,8 +87,7 @@
    "fieldname": "mobile",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Mobile",
-   "reqd": 1
+   "label": "Mobile"
   },
   {
    "fieldname": "current_address",
@@ -240,19 +238,15 @@
    "label": "Resignation Date"
   },
   {
-   "fieldname": "employee_id",
-   "fieldtype": "Data",
-   "label": "Employee ID"
-  },
-  {
    "fieldname": "date_of_joining",
    "fieldtype": "Date",
-   "label": "Date of Joining"
+   "label": "Date of Joining",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-26 11:30:48.017673",
+ "modified": "2024-10-08 15:05:41.831705",
  "modified_by": "Administrator",
  "module": "SMK HRMS",
  "name": "Employee Profile",

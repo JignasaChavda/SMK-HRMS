@@ -25,5 +25,14 @@
   "name": "Rejected",
   "style": "Danger",
   "workflow_state_name": "Rejected"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2024-10-08 15:49:11.591877",
+  "name": "In Review",
+  "style": "Primary",
+  "workflow_state_name": "In Review"
  }
 ]

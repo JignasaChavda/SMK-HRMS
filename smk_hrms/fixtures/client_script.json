@@ -1,49 +1,6 @@
 [
  {
-  "docstatus": 0,
-  "doctype": "Client Script",
-  "dt": "QC Warehouse Entry",
-  "enabled": 1,
-  "modified": "2024-09-24 12:50:48.340691",
-  "module": "SMK HRMS",
-  "name": "QC Warehouse button",
-  "script": "frappe.ui.form.on('QC Warehouse Entry', {\n\trefresh(frm) {\n        frm.add_custom_button('Purchase Order', () => {\n            frappe.msgprint(\"You clicked button\");\n        }, 'Get Items From');\n\t}\n});",
-  "view": "Form"
- },
- {
-  "docstatus": 0,
-  "doctype": "Client Script",
-  "dt": "Purchase Order",
-  "enabled": 1,
-  "modified": "2024-09-24 12:50:48.281670",
-  "module": "SMK HRMS",
-  "name": "Purchase Order button",
-  "script": "// frappe.ui.form.on('Purchase Order', {\n//     refresh(frm) {\n//         if (frm.doc.docstatus == 1) {\n//             frm.add_custom_button('QC Warehouse Entry', () => {\n//                 let doc = frappe.new_doc('QC Warehouse Entry', {\n//                     company: frm.doc.company,\n//                     supplier: frm.doc.supplier\n//                 }).then(new_doc => {\n//                     // Copy child table data\n//                     frm.doc.items.forEach(item => {\n//                         console.log(Item.rate)\n//                         // let new_item = frappe.model.add_child(new_doc, 'qc_item');\n//                         // new_item.item_code = item.item_code;\n//                         // new_item.item_name = item.item_name;\n//                         // new_item.qty = item.qty;\n//                         // new_item.rate = item.rate;\n//                         // new_item.amount = item.amount;\n//                     });\n//                     // Refresh the field to show updated data\n//                     new_doc.refresh_field('qc_item');\n//                     // Open the new Sales Invoice\n//                     frappe.set_route('Form', 'Sales Invoice', new_doc.name);\n//                 });\n//             }, 'Create');\n//         }\n//     }\n// });\n\nfrappe.ui.form.on('Purchase Order', {\n    refresh(frm) {\n        if (frm.doc.docstatus == 1) {\n            frm.add_custom_button('QC Warehouse Entry', () => {\n                // Create a new QC Warehouse Entry document\n                frappe.model.with_doctype('QC Warehouse Entry', () => {\n                    let new_doc = frappe.model.get_new_doc('QC Warehouse Entry');\n                    \n                    // // Set the company and supplier fields\n                    // new_doc.company = frm.doc.company;\n                    // new_doc.supplier = frm.doc.supplier;\n                    \n                    // // Copy child table data from items to qc_item\n                    // frm.doc.items.forEach(item => {\n                    //     let qc_item = frappe.model.add_child(new_doc, 'qc_item');\n                    //     qc_item.item_code = item.item_code;\n                    //     qc_item.uom = item.uom;\n                    //     qc_item.purchase_order_qty = item.qty;\n                    //     qc_item.purchase_order = frm.doc.name;\n                    // });\n\n                    // // Refresh the field to show updated data\n                    // frappe.model.set_value(new_doc.doctype, new_doc.name, 'qc_item', new_doc.qc_item);\n\n                    // Save the new document and navigate to it\n                    // frappe.db.insert(new_doc).then(doc => {\n                        frappe.set_route('Form', 'QC Warehouse Entry', new_doc.name);\n                    // });\n                });\n            }, 'Create');\n        }\n    }\n});\n",
-  "view": "Form"
- },
- {
-  "docstatus": 0,
-  "doctype": "Client Script",
-  "dt": "Purchase Order",
-  "enabled": 1,
-  "modified": "2024-09-24 12:50:48.309860",
-  "module": "SMK HRMS",
-  "name": "pur ord naming series",
-  "script": "frappe.ui.form.on('Purchase Order', {\n\tcustom_purchase_type(frm) {\n\t    if (frm.is_new()){\n    \t    if (frm.doc.custom_purchase_type == \"Local\"){\n    \t        frm.set_value(\"naming_series\", \"SMK/LO/PO/.FY./.###\")\n    \t    }\n    \t    else if (frm.doc.custom_purchase_type == \"Import\"){\n    \t        frm.set_value(\"naming_series\", \"SMK/IM/PO/.FY./.###\")\n    \t    }\n\t    }\n\t}\n})",
-  "view": "Form"
- },
- {
-  "docstatus": 0,
-  "doctype": "Client Script",
-  "dt": "Bill of Lading",
-  "enabled": 0,
-  "modified": "2024-09-24 12:50:48.253515",
-  "module": "SMK HRMS",
-  "name": "Bill of Lading Template",
-  "script": "frappe.ui.form.on('Bill of Lading', {\n   template: function(frm) {\n        erpnext.utils.get_terms(cur_frm.doc.template, frm.doc, function(r) {\n            if (!r.exc) {\n                frappe.model.set_value(frm.doctype, frm.docname, \"terms_and_conditions\", r.message);\n            }\n        });\n    },\n   after_save: function(frm) {\n        erpnext.utils.get_terms(cur_frm.doc.template, frm.doc, function(r) {\n            if (!r.exc) {\n                frappe.model.set_value(frm.doctype, frm.docname, \"terms_and_conditions\", r.message);\n            }\n        });\n    },\n});",
-  "view": "Form"
- },
- {
+  "_liked_by": "[\"Administrator\"]",
   "docstatus": 0,
   "doctype": "Client Script",
   "dt": "Employee",
@@ -55,28 +12,7 @@
   "view": "Form"
  },
  {
-  "docstatus": 0,
-  "doctype": "Client Script",
-  "dt": "Staffing Plan",
-  "enabled": 0,
-  "modified": "2024-09-26 15:42:42.058831",
-  "module": "SMK HRMS",
-  "name": "Update the staffing plan hired vacancy",
-  "script": "frappe.ui.form.on('Staffing Plan', {\n    refresh:function(frm) {\n        \n        var name = frm.doc.name; \n\n        \n        frm.doc.staffing_details.forEach(detail => {\n            var designation = detail.designation;\n            var child_name = detail.name;\n            console.log(name);\n            console.log(designation);\n            \n            frappe.db.get_list('Job Opening', {\n                fields: ['custom_hired_vacancy'],\n                filters: {\n                    designation: designation,\n                    staffing_plan: name\n                },\n            }).then(result => {\n                if (result.length > 0) {\n                    var customHiredVacancy = result[0].custom_hired_vacancy;\n                    console.log(customHiredVacancy);\n                    \n                    frappe.db.set_value('Staffing Plan Detail', child_name, 'custom_hired_vacancy', customHiredVacancy);\n                    frm.refresh_field('custom_hired_vacancy');\n                    \n                }\n            });\n        });\n    }\n});\n",
-  "view": "Form"
- },
- {
-  "docstatus": 0,
-  "doctype": "Client Script",
-  "dt": "Job Opening",
-  "enabled": 1,
-  "modified": "2024-09-24 12:50:48.230300",
-  "module": "SMK HRMS",
-  "name": "Set unique title in job opening",
-  "script": "frappe.ui.form.on('Job Opening', {\n\tdesignation:function(frm) {\n\t\tvar plan = frm.doc.staffing_plan;\n\t\tvar desi = frm.doc.designation;\n\t\tvar req = frm.doc.job_requisition;\n\t\t\n\t\tif (plan){\n\t\t    var title = plan+\"-\"+desi;\n\t\t    frm.set_value('job_title',title);\n    \t\tfrm.refresh_field('job_title');\n\t\t}\n\t\telse if (req){\n\t\t    var title = req+\"-\"+desi;\n\t\t    frm.set_value('job_title',title);\n    \t\tfrm.refresh_field('job_title');\n\t\t}\n\t\t\n\t}\n});   ",
-  "view": "Form"
- },
- {
+  "_liked_by": "[\"Administrator\"]",
   "docstatus": 0,
   "doctype": "Client Script",
   "dt": "Job Applicant",
@@ -88,14 +24,15 @@
   "view": "Form"
  },
  {
+  "_liked_by": "[\"Administrator\"]",
   "docstatus": 0,
   "doctype": "Client Script",
   "dt": "Employee Profile",
-  "enabled": 0,
-  "modified": "2024-09-26 11:14:00.331274",
+  "enabled": 1,
+  "modified": "2024-10-08 17:50:27.031409",
   "module": "SMK HRMS",
-  "name": "Update Workflow state",
-  "script": "frappe.ui.form.on('Employee Profile', {\n    before_save: function(frm) {\n        var state = frm.doc.workflow_state;\n\n        if (!frappe.user_roles.includes('HR Manager')) {\n            \n            if (state === 'Approved' || state === 'Rejected') {\n                frm.set_value('workflow_state', 'Pending');\n                frm.refresh_field('workflow_state');\n            }\n        }\n    },\n    refresh: function(frm){\n        var state = frm.doc.workflow_state;\n        \n        if (!frappe.user_roles.includes('HR Manager')) {\n            \n            console.log('hello')\n            if (state === 'Approved' || state === 'Rejected') {\n                frm.set_read_only(false);\n            }\n            if (state=='Pending'){\n                frm.set_read_only(true);\n            }\n        }\n    }\n});\n",
+  "name": "Update Employee master from employee profile",
+  "script": "frappe.ui.form.on('Employee Profile', {\n    aadhaar_no: function(frm) {\n        frm.set_value('copy_of_aadhaar', '');\n        frm.refresh_field('copy_of_aadhaar');\n    },\n    before_save: function(frm) {\n       \n        var state = frm.doc.workflow_state;\n\n        if (!frappe.user_roles.includes('HR Manager')) {\n        \n           \n            if (state === 'Approved' || state === 'Rejected') {\n                frm.set_value('workflow_state', 'In Review');\n                frm.refresh_field('workflow_state');\n            }\n        }\n        \n        \n    },\n    // after_save: function(frm) {\n    //     var state = frm.doc.workflow_state;\n        \n    //     if (!frappe.user_roles.includes('HR Manager')) {\n    //         console.log('Current State:', state); \n    \n    //         if (state === 'Pending') {\n               \n    //             frm.disable_form();\n    //         } \n    //         if (state === 'Approved') {\n    //             frm.refresh_field('workflow_state');\n    //         }\n    //     } \n      \n    // },\n    refresh:function(frm){\n        var state = frm.doc.workflow_state;\n        \n    },\n    after_workflow_action: function(frm){\n        var state = frm.doc.workflow_state;\n        if (state === 'Approved') {\n            update_employee_profile(frm);\n        }\n    }\n});\n\n\n\nfunction update_employee_profile(frm) {\n    var state = frm.doc.workflow_state;\n    \n    if (frappe.user_roles.includes('HR Manager')) {\n        if (state === 'Approved') {\n            console.log(\"Status is changed to\", state);\n          \n            frappe.call({\n                method: 'update_employee', \n                args: {\n                    \"name\": frm.doc.name\n                    // freeze: true,\n                    // freeze_message: \"Please wait ..\"\n                },\n                \n                callback: function(response) {\n                    if (response.message) {\n                        console.log(\"Update successful:\", response.message);\n                        frappe.show_alert({ message: 'Employee cell numbers updated successfully!', indicator: 'green' });\n                    } else {\n                        frappe.show_alert({ message: 'No updates made.', indicator: 'orange' });\n                    }\n                },\n                error: function(err) {\n                    console.error('Error while updating:', err);\n                    frappe.show_alert({ message: 'Failed to update cell numbers.', indicator: 'red' });\n                }\n            });\n        }\n    }\n}\n\n",
   "view": "Form"
  }
 ]
