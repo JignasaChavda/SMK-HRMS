@@ -1,0 +1,45 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:HANDOVER-TEM-{#####}",
+ "creation": "2024-10-14 13:08:02.661186",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "handover_task"
+ ],
+ "fields": [
+  {
+   "fieldname": "handover_task",
+   "fieldtype": "Table",
+   "label": "HandOver Task",
+   "options": "Handover Details",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-10-14 13:13:17.659417",
+ "modified_by": "Administrator",
+ "module": "SMK HRMS",
+ "name": "HandOver Template",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
