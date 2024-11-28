@@ -119,7 +119,8 @@ app_license = "mit"
 # }
 
 override_doctype_class = {
-    "Job Opening": "smk_hrms.overrides.job_opening_override.JobOpening"
+    "Job Opening": "smk_hrms.overrides.job_opening_override.JobOpening",
+    "Salary Slip": "smk_hrms.overrides.salary_slip_override.SalarySlip"
 }
 
 # Document Events
