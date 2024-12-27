@@ -1,6 +1,16 @@
 [
  {
-  "_liked_by": "[\"Administrator\"]",
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Bill of Lading",
+  "enabled": 0,
+  "modified": "2024-09-24 12:50:48.253515",
+  "module": "SMK HRMS",
+  "name": "Bill of Lading Template",
+  "script": "frappe.ui.form.on('Bill of Lading', {\n   template: function(frm) {\n        erpnext.utils.get_terms(cur_frm.doc.template, frm.doc, function(r) {\n            if (!r.exc) {\n                frappe.model.set_value(frm.doctype, frm.docname, \"terms_and_conditions\", r.message);\n            }\n        });\n    },\n   after_save: function(frm) {\n        erpnext.utils.get_terms(cur_frm.doc.template, frm.doc, function(r) {\n            if (!r.exc) {\n                frappe.model.set_value(frm.doctype, frm.docname, \"terms_and_conditions\", r.message);\n            }\n        });\n    },\n});",
+  "view": "Form"
+ },
+ {
   "docstatus": 0,
   "doctype": "Client Script",
   "dt": "Employee",
@@ -12,7 +22,6 @@
   "view": "Form"
  },
  {
-  "_liked_by": "[\"Administrator\"]",
   "docstatus": 0,
   "doctype": "Client Script",
   "dt": "Job Applicant",
@@ -24,7 +33,6 @@
   "view": "Form"
  },
  {
-  "_liked_by": "[\"Administrator\"]",
   "docstatus": 0,
   "doctype": "Client Script",
   "dt": "Employee Profile",

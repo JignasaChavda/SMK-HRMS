@@ -135,9 +135,20 @@ override_doctype_class = {
 # 	}
 # }
 
+
 # Scheduled Tasks
 # ---------------
 
+scheduler_events = {    
+    "earned_leave_allocation_sick_leave":{
+        "5 0 * * *": [
+            "smk_hrms.utils.custom_earned_leave_allocation"
+        ]
+    }
+    # "daily": [
+    #     "clevision.utils.get_last_sync_of_checkin"
+    # ]
+}
 # scheduler_events = {
 # 	"all": [
 # 		"smk_hrms.tasks.all"
