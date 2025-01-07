@@ -144,7 +144,17 @@ scheduler_events = {
         "5 0 * * *": [
             "smk_hrms.utils.custom_earned_leave_allocation"
         ]
-    }
+    },
+    "set_attendance_date": {
+        "55 23 * * *": [
+            "smk_hrms.utils.set_attendance_date"
+        ]
+    },
+    "process_employee_checkouts": {
+        "50 23 * * *": [
+            "smk_hrms.utils.process_employee_checkouts",
+        ]
+    },
     # "daily": [
     #     "clevision.utils.get_last_sync_of_checkin"
     # ]
