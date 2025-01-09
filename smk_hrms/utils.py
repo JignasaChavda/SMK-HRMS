@@ -123,12 +123,24 @@ def process_employee_checkouts():
         if logs.count("IN") > logs.count("OUT")
     ]
 
+    emp_shift = frappe.db.get_value(
+        "Shift Assignment",
+        filters={
+            "status": "Active",
+            "employee": employee,
+            "start_date": ("<=", current_date),
+            "end_date": (">=", current_date),
+        },
+        fieldname="shift_type",  # Correct parameter name for single field
+    )
+
     # Create OUT record for employees without a matching OUT
     for employee in employees_without_out:
         new_checkout = frappe.get_doc({
             "doctype": "Employee Checkin",
             "employee": employee,
             "time": now(),  
+            "shift": emp_shift,
             "log_type": "OUT",
             "custom_remarks": "Auto-Checkout",
             "latitude": "0",
@@ -356,9 +368,9 @@ def mark_attendance(date, shift):
                 hours, remainder = divmod(total_seconds, 3600)
                 minutes, seconds = divmod(remainder, 60)
                 final_OT = f"{int(hours):02}.{int(minutes):02}"
-                frappe.msgprint(f"Work Hours: {work_hours}")
-                frappe.msgprint(f"Shift Hours: {shift_hours}")
-                frappe.msgprint(f"Overtime: {final_OT}")
+                # frappe.msgprint(f"Work Hours: {work_hours}")
+                # frappe.msgprint(f"Shift Hours: {shift_hours}")
+                # frappe.msgprint(f"Overtime: {final_OT}")
                                 
             att_status = 'Present'
             att_remarks = ''
@@ -393,6 +405,8 @@ def mark_attendance(date, shift):
             if checkout_remarks == "Auto-Checkout":
                 att_status = 'Absent'
                 att_remarks = 'Auto-Checkout'
+                total_work_hours = 0
+                final_OT = 0
             else:
                 if first_chkin_time and first_chkin_time > grace_late_time:
                     late_entry_timedelta = frappe.utils.time_diff(str(first_chkin_time), str(grace_late_time))
@@ -402,8 +416,6 @@ def mark_attendance(date, shift):
                     late_entry_minute = int((total_late_entry_seconds % 3600) // 60)
                     late_entry_hours_final = f"{late_entry_hour:02d}.{late_entry_minute:02d}"
 
-                    att_status = 'Half Day'
-                    # att_remarks = f"Late Entry, checked in after grace period of {late_entry_grace_period} minutes"
                     att_late_entry = 1
 
                 if last_chkout_time and last_chkout_time < grace_early_time:
@@ -425,7 +437,7 @@ def mark_attendance(date, shift):
                     att_status = 'Absent'
 
          
-            frappe.msgprint(str(total_work_hours))
+            # frappe.msgprint(str(total_work_hours))
             exists_atte = frappe.db.get_value('Attendance', {'employee': emp_name, 'attendance_date': checkin_date, 'docstatus': 1}, ['name'])
             if not exists_atte:
                 

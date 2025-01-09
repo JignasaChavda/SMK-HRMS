@@ -155,9 +155,7 @@ scheduler_events = {
             "smk_hrms.utils.process_employee_checkouts",
         ]
     },
-    # "daily": [
-    #     "clevision.utils.get_last_sync_of_checkin"
-    # ]
+
 }
 # scheduler_events = {
 # 	"all": [

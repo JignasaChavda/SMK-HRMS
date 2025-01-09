@@ -94,10 +94,10 @@
   "doctype": "Client Script",
   "dt": "Shift Type",
   "enabled": 1,
-  "modified": "2025-01-06 12:15:30.528759",
+  "modified": "2025-01-09 11:42:49.205839",
   "module": "SMK HRMS",
   "name": "Custom attendance via Get attendance button",
-  "script": "frappe.ui.form.on('Shift Type', {\n\trefresh:function(frm) {\n\n    // Hide Default Mark Attendance Button\n    $('[data-label=\"Mark%20Attendance\"]').hide();\n    \n    \n    frm.add_custom_button(__(\"Get Attendance\"), function() {\n        var from_date = frm.doc.process_attendance_after;\n        var shift = frm.doc.name;\n        var shift_type = frm.doc.type;\n        var batchSize = 3; \n\n        \n        frappe.call({\n            method: \"clevision.utils.mark_attendance\",\n            args: {\n                \"date\": from_date,\n                \"shift\": shift,\n                freeze: true,\n                freeze_message: \"Please wait ..\"\n            },\n            callback: function(r) {\n                console.log(r)\n                // var res = r.message;\n                // res.forEach(function(message) {\n                //     frappe.msgprint(message);\n                // });\n               \n            }\n        });\n    });\n\t},\n\tprocess_attendance_after: function(frm) {\n        frm.save();\n    }\n\t\n});\n\n",
+  "script": "frappe.ui.form.on('Shift Type', {\n\trefresh:function(frm) {\n\n    // Hide Default Mark Attendance Button\n    $('[data-label=\"Mark%20Attendance\"]').hide();\n    \n    \n    frm.add_custom_button(__(\"Get Attendance\"), function() {\n        var from_date = frm.doc.process_attendance_after;\n        var shift = frm.doc.name;\n        var shift_type = frm.doc.type;\n        var batchSize = 3; \n\n        \n        frappe.call({\n            method: \"smk_hrms.utils.mark_attendance\",\n            args: {\n                \"date\": from_date,\n                \"shift\": shift,\n                freeze: true,\n                freeze_message: \"Please wait ..\"\n            },\n            callback: function(r) {\n                console.log(r)\n                // var res = r.message;\n                // res.forEach(function(message) {\n                //     frappe.msgprint(message);\n                // });\n               \n            }\n        });\n    });\n\t},\n\tprocess_attendance_after: function(frm) {\n        frm.save();\n    }\n\t\n});\n\n",
   "view": "Form"
  }
 ]
