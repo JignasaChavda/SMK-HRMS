@@ -90,16 +90,16 @@ class SalarySlip(TransactionBase):
         
             # Iterate through custom employer contribution table and evaluate formulas
             for row in salary_structure_doc.custom_employer_contribution_table:
-                # Replace "getdate(start_date).month" dynamically with `start_month`
-                formula = row.formula.replace("getdate(start_date).month", str(start_month))
-                evaluated_formula, error = evaluate_formula_parts(formula, variables)
-                if error:
-                    # frappe.msgprint(error)
-                    continue
+                if row.formula:
+                    # Replace "getdate(start_date).month" dynamically with `start_month`
+                    formula = row.formula.replace("getdate(start_date).month", str(start_month))
+                    evaluated_formula, error = evaluate_formula_parts(formula, variables)
+                    if error:
+                        # frappe.msgprint(error)
+                        continue
                 
                 self.append("custom_employer_contribution_table", {
                     "salary_component": row.salary_component,
-                    "formula": formula,
                     "amount": evaluated_formula
                 })
             
