@@ -93,7 +93,8 @@ class SalarySlip(TransactionBase):
                 if row.formula:
                     # Replace "getdate(start_date).month" dynamically with `start_month`
                     formula = row.formula.replace("getdate(start_date).month", str(start_month))
-                    evaluated_formula, error = evaluate_formula_parts(formula, variables)
+                    evaluated_formula, error = evaluate_formula_parts(formula, variables, self)
+                    
                     if error:
                         # frappe.msgprint(error)
                         continue
@@ -110,8 +111,9 @@ class SalarySlip(TransactionBase):
             # )
 
 
-def evaluate_formula_parts(formula, variables):
-    """Evaluate formulas with variables, including if-else expressions and direct amounts."""
+def evaluate_formula_parts(formula, variables, self):
+    emp_doj = frappe.db.get_value('Employee', self.employee, 'date_of_joining')
+
     try:
         # Check if the formula is a direct number (e.g., "1800" or "2000")
         if formula.isdigit():
@@ -122,17 +124,39 @@ def evaluate_formula_parts(formula, variables):
         if match:
             true_expr, condition_expr, false_expr = match.groups()
             
-            # Replace start_date and handle the month condition
-            if 'start_date' in condition_expr:
-                # Evaluate the condition based on the month of start_date
-                condition_expr = condition_expr.replace("getdate(start_date).month", str(frappe.utils.getdate(self.start_date).month))
+
+            # Replace references in the condition expression
+            if 'date_of_joining' in condition_expr:
+                condition_expr = condition_expr.replace("date_of_joining", str(emp_doj))
+            
+            if 'end_date' in condition_expr:
+                condition_expr = condition_expr.replace("end_date", str(self.end_date))
+
+            # Handling date_diff in the condition expression
+            if 'date_diff' in condition_expr:
+           
+                fixed_end_date = getdate(self.end_date)
+                fixed_doj = getdate(emp_doj)
                 
+                # Calculate the date difference in days
+                date_difference = frappe.utils.date_diff(fixed_end_date, fixed_doj)
+                
+
+                # Replace all instances of 'date_diff(end_date, date_of_joining)' with the calculated value
+                condition_expr = re.sub(r'date_diff\([^\)]*\)', str(date_difference), condition_expr)
+
+            
+            # Now, evaluate the condition (it's now ready to be evaluated)
             condition_result = eval_salary_formula(condition_expr, variables)
-            return (eval_salary_formula(true_expr, variables) if condition_result else eval_salary_formula(false_expr, variables)), None
-       
+            
+            if condition_result:
+                return eval_salary_formula(true_expr, variables), None
+            else:
+                return eval_salary_formula(false_expr, variables), None
+        
         # If no ternary condition, simply evaluate the formula
         return eval_salary_formula(formula, variables), None
-        
+
     except Exception as e:
         return None, f"Error evaluating formula '{formula}': {str(e)}"
 

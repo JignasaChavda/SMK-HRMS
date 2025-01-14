@@ -13,7 +13,7 @@ def execute(filters=None):
     if not salary_slips:
         return [], []
 
-    # Gather all salary components across all Salary Slips and group them by custom_salary_component_type
+    # Gather all salary components across all Salary Slips and group them by custom_salary_component_type for earnings and deductions
     salary_components_by_type = get_salary_components_grouped_by_type(salary_slips)
 
     # Static columns for basic information about Salary Slip (no PF, ESIC, etc.)
@@ -38,12 +38,15 @@ def execute(filters=None):
             "gross_salary": ss.gross_pay,
         }
 
-        # Add dynamic columns for grouped salary components (based on custom_salary_component_type)
+        # Add dynamic columns for grouped salary components (both earnings and deductions)
         for component_type, components in salary_components_by_type.items():
             total_amount = 0
             for component in components:
                 total_amount += get_salary_component_amount(salary_slip_doc, component)
             row[component_type] = total_amount
+
+        # Add the Net Salary at the end
+        row["net_salary"] = ss.net_pay
 
         data.append(row)
 
@@ -140,7 +143,7 @@ def get_columns(salary_components_by_type):
         },
     ]
 
-    # Add dynamic columns for each custom_salary_component_type
+    # Add dynamic columns for each custom_salary_component_type (for both earnings and deductions)
     for component_type in salary_components_by_type:
         columns.append({
             "label": component_type,
@@ -150,6 +153,15 @@ def get_columns(salary_components_by_type):
             "precision": 2,
         })
 
+    # Add the Net Salary column at the end
+    columns.append({
+        "label": "Net Salary",
+        "fieldname": "net_salary",
+        "fieldtype": "Currency",
+        "width": 120,
+        "precision": 2,
+    })
+
     return columns
 
 def get_salary_components_grouped_by_type(salary_slips):
@@ -157,8 +169,20 @@ def get_salary_components_grouped_by_type(salary_slips):
 
     for ss in salary_slips:
         salary_slip_doc = frappe.get_doc("Salary Slip", ss.name)
+        
         # Extract salary components from earnings
-        for emp in salary_slip_doc.get('custom_employer_contribution_table'):
+        for emp in salary_slip_doc.get('earnings'):
+            salary_component_doc = frappe.get_doc("Salary Component", emp.salary_component)
+            component_type = salary_component_doc.custom_salary_component_type
+
+            if component_type not in salary_components_by_type:
+                salary_components_by_type[component_type] = []
+
+            if emp.salary_component not in salary_components_by_type[component_type]:
+                salary_components_by_type[component_type].append(emp.salary_component)
+
+        # Extract salary components from deductions (similar to earnings)
+        for emp in salary_slip_doc.get('deductions'):
             salary_component_doc = frappe.get_doc("Salary Component", emp.salary_component)
             component_type = salary_component_doc.custom_salary_component_type
 
@@ -171,9 +195,16 @@ def get_salary_components_grouped_by_type(salary_slips):
     return salary_components_by_type
 
 def get_salary_component_amount(salary_slip_doc, salary_component):
-    for emp in salary_slip_doc.get('custom_employer_contribution_table'):
+    # Check in earnings
+    for emp in salary_slip_doc.get('earnings'):
         if emp.salary_component == salary_component:
             return emp.amount
+
+    # Check in deductions
+    for emp in salary_slip_doc.get('deductions'):
+        if emp.salary_component == salary_component:
+            return emp.amount
+
     return 0
 
 def get_salary_slips(filters):
