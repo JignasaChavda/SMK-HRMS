@@ -10,6 +10,7 @@
  ],
  "fields": [
   {
+   "allow_in_quick_entry": 1,
    "fieldname": "salary_component_type",
    "fieldtype": "Data",
    "label": "Salary Component Type",
@@ -18,7 +19,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-11 16:45:01.172479",
+ "modified": "2025-01-20 13:05:20.259234",
  "modified_by": "Administrator",
  "module": "SMK HRMS",
  "name": "Salary Component Type",
