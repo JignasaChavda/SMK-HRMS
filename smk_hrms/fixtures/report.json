@@ -1,0 +1,223 @@
+[
+ {
+  "add_total_row": 1,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2024-12-27 18:43:37.061552",
+  "module": "SMK HRMS",
+  "name": "Employee Salary Contribution",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Salary Slip",
+  "reference_report": null,
+  "report_name": "Employee Salary Contribution",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Employee Salary Contribution",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Employee Salary Contribution",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Employee Salary Contribution",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee"
+   },
+   {
+    "parent": "Employee Salary Contribution",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee Self Service"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": "SMK Letter Pad",
+  "modified": "2025-01-11 17:09:22.677261",
+  "module": "SMK HRMS",
+  "name": "Salary Payment Report",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Salary Slip",
+  "reference_report": null,
+  "report_name": "Salary Payment Report",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Salary Payment Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Salary Payment Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "columns": [
+   {
+    "fieldname": "employee",
+    "fieldtype": "Data",
+    "label": "Employee",
+    "options": null,
+    "parent": "Salary Payment For Accounts",
+    "parentfield": "columns",
+    "parenttype": "Report",
+    "width": 0
+   },
+   {
+    "fieldname": "emp_name",
+    "fieldtype": "Data",
+    "label": "Employee Name",
+    "options": null,
+    "parent": "Salary Payment For Accounts",
+    "parentfield": "columns",
+    "parenttype": "Report",
+    "width": 0
+   },
+   {
+    "fieldname": "company",
+    "fieldtype": "Data",
+    "label": "Company",
+    "options": null,
+    "parent": "Salary Payment For Accounts",
+    "parentfield": "columns",
+    "parenttype": "Report",
+    "width": 0
+   },
+   {
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "From Date",
+    "options": null,
+    "parent": "Salary Payment For Accounts",
+    "parentfield": "columns",
+    "parenttype": "Report",
+    "width": 0
+   },
+   {
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "To Date",
+    "options": null,
+    "parent": "Salary Payment For Accounts",
+    "parentfield": "columns",
+    "parenttype": "Report",
+    "width": 0
+   },
+   {
+    "fieldname": "net_pay",
+    "fieldtype": "Currency",
+    "label": "Net Pay",
+    "options": null,
+    "parent": "Salary Payment For Accounts",
+    "parentfield": "columns",
+    "parenttype": "Report",
+    "width": 0
+   }
+  ],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": null,
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "From Date",
+    "mandatory": 1,
+    "options": null,
+    "parent": "Salary Payment For Accounts",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": null,
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "To Date",
+    "mandatory": 1,
+    "options": null,
+    "parent": "Salary Payment For Accounts",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "SMK Letter Pad",
+  "modified": "2025-01-20 16:13:26.116480",
+  "module": "SMK HRMS",
+  "name": "Salary Payment For Accounts",
+  "prepared_report": 0,
+  "query": "SELECT\n   ss.employee AS \"Employee\",\n   ss.employee_name AS \"Employee Name\",\n   ss.company AS \"Company\",\n   ss.start_date AS \"From Date\",\n   ss.end_date AS \"To Date\",\n   ss.net_pay AS \"Net Pay\"\nFROM\n   `tabSalary Slip` AS ss\nWHERE\n   ss.docstatus = 1\n   AND ss.start_date >= %(from_date)s\n   AND ss.end_date <= %(to_date)s\n",
+  "ref_doctype": "Salary Slip",
+  "reference_report": null,
+  "report_name": "Salary Payment For Accounts",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Salary Payment For Accounts",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Salary Payment For Accounts",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Salary Payment For Accounts",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee"
+   },
+   {
+    "parent": "Salary Payment For Accounts",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee Self Service"
+   }
+  ],
+  "timeout": 0
+ }
+]

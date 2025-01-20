@@ -290,5 +290,12 @@ fixtures = [
             ],
         ]
     ]},
+    {"dt":"Report","filters":[
+        [
+            "module","in",[
+               "SMK HRMS"
+            ],
+        ]
+    ]},
 ]
 
