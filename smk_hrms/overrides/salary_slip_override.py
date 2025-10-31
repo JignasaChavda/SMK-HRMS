@@ -90,13 +90,14 @@ class SalarySlip(TransactionBase):
         
             # Iterate through custom employer contribution table and evaluate formulas
             for row in salary_structure_doc.custom_employer_contribution_table:
+                evaluated_formula = 0
                 if row.formula:
                     # Replace "getdate(start_date).month" dynamically with `start_month`
                     formula = row.formula.replace("getdate(start_date).month", str(start_month))
-                    evaluated_formula, error = evaluate_formula_parts(formula, variables, self)
                     
+                    evaluated_formula, error = evaluate_formula_parts(formula, variables, self)
                     if error:
-                        # frappe.msgprint(error)
+                        evaluated_formula = 0 
                         continue
                 
                 self.append("custom_employer_contribution_table", {
@@ -110,67 +111,122 @@ class SalarySlip(TransactionBase):
             #     emp, salary_structure, base), title=_("Details")
             # )
 
+import frappe, re
+from frappe.utils import getdate, date_diff
 
 def evaluate_formula_parts(formula, variables, self):
-    emp_doj = frappe.db.get_value('Employee', self.employee, 'date_of_joining')
+    """Evaluate salary formula safely with support for date_diff(), employee fields, variables, and ternary conditions."""
+
+    # Fetch Employee document (with all custom fields)
+    emp_doc = frappe.get_doc("Employee", self.employee)
+    emp_doj = emp_doc.date_of_joining
 
     try:
         # Check if the formula is a direct number (e.g., "1800" or "2000")
         if formula.isdigit():
             return float(formula), None
-        
-        # If the formula contains a ternary condition (if-else expression), process it
+
+        # ---- 1 Replace Employee field references dynamically ----
+        original_formula = formula 
+        emp_fields = frappe.get_meta("Employee").fields
+        for f in emp_fields:
+            if f.fieldname in formula:
+                val = emp_doc.get(f.fieldname)
+                val_str = str(val).replace(",", "").replace("₹", "").strip()
+                try:
+                    float(val_str)
+                except:
+                    pass
+                    # val_str = "0"
+                formula = re.sub(rf"\b{f.fieldname}\b", val_str, formula)
+
+        # ---- 2 Handle date_diff(...) expressions ----
+        if "date_diff(" in formula:
+            pattern = r"date_diff\s*\(\s*([a-zA-Z0-9_]+)\s*,\s*([a-zA-Z0-9_]+)\s*\)"
+            
+            matches = re.findall(pattern, original_formula)
+            
+            for end_expr, start_expr in matches:
+                end_expr, start_expr = end_expr.strip(), start_expr.strip()
+                
+                # Resolve variables to actual values
+                if end_expr == "end_date":
+                    end_value = self.end_date
+                elif hasattr(self, end_expr):
+                    end_value = getattr(self, end_expr)
+                else:
+                    end_value = emp_doc.get(end_expr)
+
+                # start_value = emp_doj
+                if start_expr == "date_of_joining":
+                    start_value = emp_doj
+                elif hasattr(self, start_expr):
+                    start_value = getattr(self, start_expr)
+                else:
+                    start_value = emp_doc.get(start_expr)
+                    
+                # Compute difference
+                if end_value and start_value:
+                    diff = date_diff(getdate(end_value), getdate(start_value))
+    
+                else:
+                    diff = 0
+
+                # Replace in formula
+               
+                formula = original_formula.replace(f"date_diff({end_expr}, {start_expr})", str(diff))
+                
+                
+        # ---- 3 Handle ternary expressions (x if y else z) ----
         match = re.match(r'\((.*?)\)\s*if\s*(.*?)\s*else\s*(.*)', formula)
         if match:
             true_expr, condition_expr, false_expr = match.groups()
-            
 
-            # Replace references in the condition expression
-            if 'date_of_joining' in condition_expr:
-                condition_expr = condition_expr.replace("date_of_joining", str(emp_doj))
-            
-            if 'end_date' in condition_expr:
-                condition_expr = condition_expr.replace("end_date", str(self.end_date))
+            # Substitute variables in condition
+            for var, val in variables.items():
+                if isinstance(val, tuple):
+                    val = val[0]
+                condition_expr = re.sub(rf"\b{var}\b", str(val or 0), condition_expr)
 
-            # Handling date_diff in the condition expression
-            if 'date_diff' in condition_expr:
-           
-                fixed_end_date = getdate(self.end_date)
-                fixed_doj = getdate(emp_doj)
-                
-                # Calculate the date difference in days
-                date_difference = frappe.utils.date_diff(fixed_end_date, fixed_doj)
-                
-
-                # Replace all instances of 'date_diff(end_date, date_of_joining)' with the calculated value
-                condition_expr = re.sub(r'date_diff\([^\)]*\)', str(date_difference), condition_expr)
-
-            
-            # Now, evaluate the condition (it's now ready to be evaluated)
+            # Evaluate condition
             condition_result = eval_salary_formula(condition_expr, variables)
-            
             if condition_result:
                 return eval_salary_formula(true_expr, variables), None
             else:
                 return eval_salary_formula(false_expr, variables), None
+
+        # ---- 4 Replace variables like B, HRA, SA, etc. ----
+        for var, val in variables.items():
+            if isinstance(val, tuple):
+                val = val[0]
+            formula = re.sub(rf"\b{var}\b", str(val or 0), formula)
+            
         
-        # If no ternary condition, simply evaluate the formula
-        return eval_salary_formula(formula, variables), None
+        # ---- 5 Final cleanup before eval ----
+        formula = formula.replace("₹", "").replace(",", "").strip()
+        
+        frappe.logger().info(f"[Salary Eval] Final Clean Formula: {formula}")
+
+        # ---- 6 Evaluate safely ----
+        evaluated_value = eval_salary_formula(formula, variables)
+        return float(evaluated_value or 0), None
 
     except Exception as e:
         return None, f"Error evaluating formula '{formula}': {str(e)}"
 
+
+# Helper Function for Safe Evaluation
 def eval_salary_formula(formula, variables):
-    """Safely evaluate formulas by replacing variables."""
+    """Safely evaluate formula using frappe.safe_eval with fallback."""
     try:
-        for var, value in variables.items():
-            formula = formula.replace(var, str(value))
-        return eval(formula)
-    except Exception as e:
-        return None, f"Error in formula evaluation: {str(e)}"
-
-
-
+        return frappe.safe_eval(formula, None, variables)
+    except Exception:
+        # Try with Python eval as fallback
+        try:
+            return eval(formula, {"__builtins__": {}}, variables)
+        except Exception:
+            return 0
+        
 def find_salary_component_from_abbr(self, abbr):
     """Find the salary component value and name by abbreviation."""
     salary_slip_doc = frappe.get_doc("Salary Slip", self.name)
@@ -182,5 +238,3 @@ def find_salary_component_from_abbr(self, abbr):
                 return item.salary_component, item.amount
 
     return None, 0
-
-
