@@ -1,0 +1,133 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:EMP-{employee}: {YYYY}-{#####}",
+ "creation": "2025-09-29 13:28:29.901692",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "employee",
+  "employee_name",
+  "week_from_date",
+  "week_to_date",
+  "parent_kra",
+  "sub_kra",
+  "details_of_work",
+  "column_break_mvvi",
+  "progress",
+  "remarks_self",
+  "remarks_manager",
+  "remarks_hr",
+  "section_break_woqw",
+  "kra_kpi_details"
+ ],
+ "fields": [
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Employee",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "employee.employee_name",
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "label": "Employee Name"
+  },
+  {
+   "fieldname": "week_from_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Week From Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "week_to_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Week To Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "parent_kra",
+   "fieldtype": "Link",
+   "label": "Parent KRA",
+   "options": "KRA"
+  },
+  {
+   "fieldname": "sub_kra",
+   "fieldtype": "Link",
+   "label": "Sub KRA",
+   "options": "KRA"
+  },
+  {
+   "fieldname": "details_of_work",
+   "fieldtype": "Small Text",
+   "label": "Details of Work"
+  },
+  {
+   "fieldname": "column_break_mvvi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "progress",
+   "fieldtype": "Percent",
+   "label": "Progress",
+   "precision": "2"
+  },
+  {
+   "fieldname": "remarks_self",
+   "fieldtype": "Small Text",
+   "label": "Remarks Self"
+  },
+  {
+   "fieldname": "remarks_manager",
+   "fieldtype": "Small Text",
+   "label": "Remarks Manager"
+  },
+  {
+   "fieldname": "remarks_hr",
+   "fieldtype": "Small Text",
+   "label": "Remarks HR"
+  },
+  {
+   "fieldname": "section_break_woqw",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "kra_kpi_details",
+   "fieldtype": "Table",
+   "label": "KRA KPI Details",
+   "options": "KRA-KPI Details"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-12-09 11:59:51.537117",
+ "modified_by": "Administrator",
+ "module": "SMK HRMS",
+ "name": "Weekly Progress Tracker",
+ "naming_rule": "Expression",
+ "owner": "jignasha@sanskartechnolab.com",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

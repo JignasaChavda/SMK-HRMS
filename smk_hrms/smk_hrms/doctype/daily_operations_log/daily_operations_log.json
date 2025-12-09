@@ -1,0 +1,150 @@
+{
+ "_liked_by": "[\"jignasha@sanskartechnolab.com\"]",
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:EMP-{employee}: {date}",
+ "creation": "2025-09-29 11:23:53.333414",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "employee",
+  "employee_name",
+  "date",
+  "shift_time",
+  "task",
+  "matl_qtykg",
+  "work_order_no",
+  "plan_no",
+  "column_break_ytan",
+  "no_of_workers",
+  "time_estimated_min",
+  "time_actual_min",
+  "remarks",
+  "remarks_line_manager",
+  "remarks_hr",
+  "section_break_1dqd",
+  "kra_kpi_details"
+ ],
+ "fields": [
+  {
+   "fieldname": "employee",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Employee",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "employee.employee_name",
+   "fieldname": "employee_name",
+   "fieldtype": "Data",
+   "label": "Employee Name"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "shift_time",
+   "fieldtype": "Data",
+   "label": "Shift Time"
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Task",
+   "reqd": 1
+  },
+  {
+   "fieldname": "matl_qtykg",
+   "fieldtype": "Data",
+   "label": "Matl Qty/Kg"
+  },
+  {
+   "fieldname": "work_order_no",
+   "fieldtype": "Link",
+   "label": "Work Order No",
+   "options": "Work Order"
+  },
+  {
+   "fieldname": "plan_no",
+   "fieldtype": "Data",
+   "label": "Plan No"
+  },
+  {
+   "fieldname": "column_break_ytan",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "no_of_workers",
+   "fieldtype": "Int",
+   "label": "No of Workers"
+  },
+  {
+   "fieldname": "time_estimated_min",
+   "fieldtype": "Data",
+   "label": "Time Estimated Min"
+  },
+  {
+   "fieldname": "time_actual_min",
+   "fieldtype": "Data",
+   "label": "Time Actual Min"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks (Self)"
+  },
+  {
+   "fieldname": "remarks_line_manager",
+   "fieldtype": "Small Text",
+   "label": "Remarks (Line Manager)"
+  },
+  {
+   "fieldname": "remarks_hr",
+   "fieldtype": "Small Text",
+   "label": "Remarks (HR)"
+  },
+  {
+   "fieldname": "section_break_1dqd",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "kra_kpi_details",
+   "fieldtype": "Table",
+   "label": "KRA KPI Details",
+   "options": "KRA-KPI Details"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-12-09 11:55:50.342086",
+ "modified_by": "Administrator",
+ "module": "SMK HRMS",
+ "name": "Daily Operations Log",
+ "naming_rule": "Expression",
+ "owner": "jignasha@sanskartechnolab.com",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
