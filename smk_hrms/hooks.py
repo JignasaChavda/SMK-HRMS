@@ -28,7 +28,9 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {
+    "Appraisal Template" : "public/js/appraisal_template.js"
+    }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -120,7 +122,8 @@ app_license = "mit"
 
 override_doctype_class = {
     "Job Opening": "smk_hrms.overrides.job_opening_override.JobOpening",
-    "Salary Slip": "smk_hrms.overrides.salary_slip_override.SalarySlip"
+    "Salary Slip": "smk_hrms.overrides.salary_slip_override.SalarySlip",
+    "Appraisal Template": "smk_hrms.overrides.appraisal_template_override.CustomAppraisalTemplate",
 }
 
 # Document Events

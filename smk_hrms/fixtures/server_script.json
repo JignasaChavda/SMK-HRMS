@@ -114,7 +114,6 @@
   "script_type": "API"
  },
  {
-  "_liked_by": "[\"Administrator\"]",
   "allow_guest": 0,
   "api_method": null,
   "cron_format": null,
@@ -134,7 +133,6 @@
   "script_type": "DocType Event"
  },
  {
-  "_liked_by": "[\"Administrator\"]",
   "allow_guest": 0,
   "api_method": null,
   "cron_format": null,
@@ -154,7 +152,6 @@
   "script_type": "DocType Event"
  },
  {
-  "_liked_by": "[\"Administrator\"]",
   "allow_guest": 0,
   "api_method": null,
   "cron_format": null,

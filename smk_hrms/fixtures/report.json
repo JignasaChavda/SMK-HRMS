@@ -1,7 +1,7 @@
 [
  {
-  "_liked_by": "[\"Administrator\"]",
   "add_total_row": 1,
+  "add_translate_data": 0,
   "columns": [],
   "disabled": 0,
   "docstatus": 0,
@@ -50,8 +50,8 @@
   "timeout": 0
  },
  {
-  "_liked_by": "[\"Administrator\"]",
   "add_total_row": 1,
+  "add_translate_data": 0,
   "columns": [],
   "disabled": 0,
   "docstatus": 0,
@@ -60,7 +60,7 @@
   "is_standard": "Yes",
   "javascript": null,
   "json": null,
-  "letter_head": "SMK Letter Pad",
+  "letter_head": null,
   "modified": "2025-01-11 17:09:22.677261",
   "module": "SMK HRMS",
   "name": "Salary Payment Report",
@@ -88,8 +88,8 @@
   "timeout": 0
  },
  {
-  "_liked_by": "[\"Administrator\"]",
   "add_total_row": 1,
+  "add_translate_data": 0,
   "columns": [
    {
     "fieldname": "employee",
@@ -224,8 +224,8 @@
   "timeout": 0
  },
  {
-  "_liked_by": "[\"Administrator\"]",
   "add_total_row": 0,
+  "add_translate_data": 0,
   "columns": [],
   "disabled": 0,
   "docstatus": 0,
@@ -234,7 +234,7 @@
   "is_standard": "Yes",
   "javascript": null,
   "json": null,
-  "letter_head": "SMK Letter Pad",
+  "letter_head": null,
   "modified": "2025-01-22 16:49:34.301157",
   "module": "SMK HRMS",
   "name": "Salary Structure Report",
@@ -257,6 +257,56 @@
     "parentfield": "roles",
     "parenttype": "Report",
     "role": "HR User"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "Yes",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2025-12-05 15:58:33.709286",
+  "module": "SMK HRMS",
+  "name": "Employee Performance Evaluation Report",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Weekly Progress Tracker",
+  "reference_report": null,
+  "report_name": "Employee Performance Evaluation Report",
+  "report_script": null,
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Employee Performance Evaluation Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee"
+   },
+   {
+    "parent": "Employee Performance Evaluation Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR Manager"
+   },
+   {
+    "parent": "Employee Performance Evaluation Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "HR User"
+   },
+   {
+    "parent": "Employee Performance Evaluation Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee Self Service"
    }
   ],
   "timeout": 0
